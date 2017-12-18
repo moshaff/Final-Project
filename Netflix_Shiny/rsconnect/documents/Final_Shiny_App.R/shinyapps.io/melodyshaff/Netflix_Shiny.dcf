@@ -1,0 +1,12 @@
+name: Netflix_Shiny
+title: Netflix_Shiny
+username:
+account: melodyshaff
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 249715
+bundleId: 1140054
+url: https://melodyshaff.shinyapps.io/Netflix_Shiny/
+when: 1513563565.47393
+asMultiple: FALSE
+asStatic: FALSE

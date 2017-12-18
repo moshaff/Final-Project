@@ -1,0 +1,62 @@
+---
+title: "Netflix On Twitter"
+author: "Melody Shaff"
+date: "December 17, 2017"
+output: slidy_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+## Netflix...why?
+
+I chose to look at Netflix as a brand for a number of reasons. First, and foremost, I'm a fan of the platform and have known Reed Hastings since before Netflix blew up. I remember testing and providing feedback (primarily through my parents) when the company was just getting started. Second, as a provider of a wealth of content, I was curious to see how people interacted with and referenced Netflix on Twitter: were they exuberant about a new Netflix Original show? Were they disappointed at buffering speed? Were people primarily engaged with the brand itself or with the content it provided? Some of these questions proved exceptionally difficult to explore,  given time constraints, but Netflix still served as an interesting case study for brand interaction on Twitter.
+
+
+
+## Netflix Tweet Analysis
+
+- Mapping
+- Sentiment Analysis
+- Shiny App
+
+
+
+## Mapping
+
+The map below shows the tweets in the U.S. also tracking "Netflix" and shows us the predicted spread. There is far higher density of tweets in places with higher concentration of people (the coasts, Chicago, etc.). If you're curious about an individual city and the tweet density there, you can zoom in on that area of the map. 
+
+```{r cars, echo = FALSE, message=FALSE}
+library(leaflet)
+library(readr)
+
+us_netflix_tweets.df <- read_csv('us_netflix_tweets.csv')
+us_netflix_tweets.df <- data.frame(us_netflix_tweets.df)
+
+# plot map with leaflet
+map <- leaflet(us_netflix_tweets.df) %>% addTiles('http://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}.png', 
+                                         attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>') 
+# m %>% setView(-100.044345, 41.314352, zoom = 4) # sets central location to NEBRASKA, so we can zoom into the US
+map %>% addCircles(~lon, ~lat, popup=us_netflix_tweets.df$lon, weight = 3, radius=40, 
+                 color="#f70bb8", stroke = TRUE, fillOpacity = 0.8) 
+```
+
+
+
+## Netflix Sentiment
+
+- Bing: I used bing sentiment to look at the simple positive vs. negative sentiment in discussions of Netflix on Twitter. I did this in a simple tibble, a word cloud, and a comparison cloud. 
+- Afinn: I used afinn sentiment to replicate, and look at further nuances (as afinn offers a scale of positive and negative scores), and to look at sum scores for an each individual tweet rather than only examining words used on their own. 
+  - For example:
+  ![](https://imgur.com/xscZmSb.png)
+
+## Sentiment Conclusions
+
+The sentiment analysis was largely inconclusive. Though it is apparent that both the tweets and the individual words used to discuss Netflix on Twitter were negative, this does not necessarily reflect poorly on the brand. Given the timing of this assignment, and the appearance of "netneutrality" as one of the most common words used in tweets about Netflix, some of the negative sentiment may be closer linked to the recent vote in the FCC to lift regulations on Net Neutrality. Further, Netflix offers a wide array of content and it is more than likely that much of the Twitter discussions referencing Netflix are focused on television shows and movies watched via Netflix, rather than the service Netflix provides. This means that while the sentiment analysis is certainly interesting, results displaying negativity in relation to Netflix's brand on Twitter should be taken with a grain of salt as they likely do not reflect poorly on the brand itself. 
+
+
+## Shiny App
+
+Despite its limitations, the sentiment analysis of Netflix tweets was very interesting to me. Because of this, I decided to focus my [shiny app](https://melodyshaff.shinyapps.io/Netflix_Shiny/) on this element of my project. This app allows the user to look at a range of Afinn scores and see which words were tweeted (referencing Netflix) and how many times each appears. 
+
+![](https://imgur.com/UEmaTgz.png)
